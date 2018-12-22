@@ -481,11 +481,11 @@ class tf_idf_analysis:
             counter+=1
     def get_tf_idf_score(self,word,doc):
         '''returns the tf-idf score of the document '''
-        doc_no=self.get_doc_no(doc)
-        return self.terms_tf_idf_score[doc_no].get(word,0)
-    def top(self,doc,n):
-        '''returns top n most important word of that document'''
-        doc_no=self.get_doc_no(doc)
+        tf=self.get_term_frequency(doc)
+        ans=self.tf_mul_idf(tf.get(word,0),len(self.terms_df.get(word,[])))
+        return ans
+    def top(self,doc_no,n):
+        '''returns top n most important word of the given document number'''
         x=self.terms_tf_idf_score[doc_no]
         return sorted(x.items(),key=lambda z:z[1],reverse=True)[:n]
     def get_tf_idf_vector(self,doc):
